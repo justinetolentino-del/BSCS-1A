@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Calculator</h1>
+        <input type="number" placeholder="Enter first number" id="num1">
+        <input type="number" placeholder="Enter second number" id="num2">
+
+        <div class="buttons">
+            <button onclick="addNumbers()">Add (+)</button>
+            <button onclick="minusNumbers()">Subtract (-)</button>
+            <button onclick="multiplyNumbers()">Multiply (*)</button>
+            <button onclick="divideNumbers()">Divide (/)</button>
+            <button onclick="clearInputs()">Clear (C)</button>
+        </div>
+
+        <div class="output" id="sumResult">Result: </div>
+    </div>
+
+    <script>
+        
+         function addNumbers(){
+            let num1 = Number(document.getElementById("num1").value);
+            let num2 = Number(document.getElementById("num2").value);
+            
+            let result = sum(num1,num2);
+            document.getElementById("sumResult").innerHTML = "Result: " + result;
+        }
+
+        function sum(x , y){
+            return x + y;
+        }
+
+         function minusNumbers(){
+            let num1 = Number(document.getElementById("num1").value);
+            let num2 = Number(document.getElementById("num2").value);
+         
+            let result = difference(num1,num2);
+            document.getElementById("sumResult").innerHTML = "Result: " + result;
+         }
+
+        function difference(x , y){
+            return x - y;
+        }
+
+        function multiplyNumbers(){
+            let num1 = Number(document.getElementById("num1").value);
+            let num2 = Number(document.getElementById("num2").value);
+         
+            let result = product(num1,num2);
+            document.getElementById("sumResult").innerHTML = "Result: " + result;
+         }
+
+        function product(x , y){
+            return x * y;
+        }
+
+        function divideNumbers(){
+            let num1 = Number(document.getElementById("num1").value);
+            let num2 = Number(document.getElementById("num2").value);
+         
+            let result = quotient(num1,num2);
+            document.getElementById("sumResult").innerHTML = "Result: " + result;
+         }
+
+        function quotient(x , y){
+            return x / y;
+        }
+
+        function clearInputs(){
+            document.getElementById("num1").value=clearInputs;
+            document.getElementById("num2").value=clearInputs;
+            document.getElementById("sumResult").innerHTML = "Result: 0";
+        }
+
+
+    </script>
+</body>
+</html>
