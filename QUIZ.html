@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz Upload</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:200px;
+background:#c6e2ff;
+height:100vh;
+padding-top:20px;
+position:fixed;
+}
+
+.sidebar a{
+display:block;
+color:black;
+padding:15px;
+text-decoration:none;
+}
+
+.sidebar a:hover{
+background:#575757;
+color:white;
+}
+
+/* CONTENT */
+
+.content{
+margin-left:200px;
+padding:20px;
+width:100%;
+background:beige;
+min-height:100vh;
+}
+
+.card{
+background:lavender;
+padding:15px;
+border-radius:10px;
+width:300px;
+margin-top:10px;
+}
+
+input,button{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+button{
+background:#333;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+background:black;
+}
+
+.delete-btn{
+background:red;
+}
+
+.preview-img{
+width:100%;
+margin-top:10px;
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<a href="index.html">Home</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="quiz.html">Quiz</a>
+<a href="lab.html">Lab</a>
+<a href="exam.html">Exam</a>
+</div>
+
+<div class="content">
+
+<h1>Quiz Upload</h1>
+
+<div class="card">
+
+<form id="quizForm">
+
+<input type="text" id="title" placeholder="Title" required>
+
+<input type="file" id="imageInput" accept="image/*">
+
+<img id="quizPreview" class="preview-img">
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<h2>Uploaded Quizzes</h2>
+<div id="uploads"></div>
+
+</div>
+
+<script>
+
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("quizPreview");
+const form = document.getElementById("quizForm");
+
+/* IMAGE PREVIEW */
+
+imageInput.addEventListener("change", function(){
+
+const file = this.files[0];
+
+if(file){
+preview.src = URL.createObjectURL(file);
+preview.style.display = "block";
+}
+
+});
+
+/* SUBMIT FORM */
+
+form.addEventListener("submit", function(event){
+
+event.preventDefault();
+
+const title = document.getElementById("title").value;
+const file = imageInput.files[0];
+
+if(!file){
+alert("Please select an image!");
+return;
+}
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+let uploads = JSON.parse(localStorage.getItem("quizUploads")) || [];
+
+uploads.push({
+title:title,
+image:e.target.result
+});
+
+localStorage.setItem("quizUploads",JSON.stringify(uploads));
+
+alert("Quiz uploaded!");
+
+clearForm();
+displayUploads();
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+document.getElementById("title").value="";
+
+imageInput.value="";
+
+preview.src="";
+preview.style.display="none";
+
+}
+
+/* DISPLAY UPLOADS */
+
+function displayUploads(){
+
+const container = document.getElementById("uploads");
+
+let uploads = JSON.parse(localStorage.getItem("quizUploads")) || [];
+
+container.innerHTML="";
+
+uploads.forEach((quiz,index)=>{
+
+container.innerHTML+=`
+
+<div class="card">
+
+<h3>${quiz.title}</h3>
+
+<img src="${quiz.image}" style="width:100%;">
+
+<button class="delete-btn" onclick="deleteQuiz(${index})">Delete</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+/* DELETE QUIZ */
+
+function deleteQuiz(index){
+
+let uploads = JSON.parse(localStorage.getItem("quizUploads")) || [];
+
+if(confirm("Delete this quiz?")){
+
+uploads.splice(index,1);
+
+localStorage.setItem("quizUploads",JSON.stringify(uploads));
+
+displayUploads();
+
+}
+
+}
+
+/* LOAD SAVED DATA */
+
+window.onload = displayUploads;
+
+</script>
+
+</body>
+</html>

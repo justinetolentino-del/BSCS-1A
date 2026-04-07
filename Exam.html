@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exam Upload</title>
+
+    <style>
+        body { margin: 0; font-family: Arial; display: flex; }
+
+        .sidebar {
+            width: 200px;
+            background: #c6e2ff;
+            height: 100vh;
+            padding-top: 20px;
+            position: fixed;
+        }
+
+        .sidebar a {
+            display: block;
+            color: black;
+            padding: 15px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover { background: #575757; }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+            width: 100%;
+            background: beige;
+        }
+
+        .card {
+            background: lavender;
+            padding: 15px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #333;
+            color: white;
+            border: none;
+        }
+
+        .delete-btn {
+            background: red;
+        }
+
+        .preview-img {
+            width: 100%;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="lab.html">Lab</a>
+    <a href="exam.html">Exam</a>
+</div>
+
+<div class="content">
+    <h1>Exam Upload</h1>
+
+    <div class="card">
+        <form onsubmit="submitForm(event)">
+            
+            <input type="text" id="title" placeholder="Title" required>
+
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+
+            <img id="preview" class="preview-img">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <h2>Uploaded Exams</h2>
+    <div id="uploads"></div>
+</div>
+
+<script>
+// preview image
+function previewImage(event) {
+    var img = document.getElementById("preview");
+    var file = event.target.files[0];
+
+    if (file) {
+        img.src = URL.createObjectURL(file);
+        img.style.display = "block";
+    }
+}
+
+// submit form
+function submitForm(event) {
+    event.preventDefault();
+
+    var title = document.getElementById("title").value;
+    var file = document.getElementById("imageInput").files[0];
+
+    if (!file) {
+        alert("Please upload an image!");
+        return;
+    }
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var imageData = e.target.result;
+
+        var uploads = JSON.parse(localStorage.getItem("examUploads")) || [];
+
+        uploads.push({
+            title: title,
+            image: imageData
+        });
+
+        localStorage.setItem("examUploads", JSON.stringify(uploads));
+
+        alert("Exam submitted!");
+
+        // clear inputs
+        document.getElementById("title").value = "";
+        document.getElementById("imageInput").value = "";
+        document.getElementById("preview").style.display = "none";
+
+        displayUploads();
+    };
+
+    reader.readAsDataURL(file);
+}
+
+// display uploads
+function displayUploads() {
+    var container = document.getElementById("uploads");
+    var uploads = JSON.parse(localStorage.getItem("examUploads")) || [];
+
+    container.innerHTML = "";
+
+    for (var i = 0; i < uploads.length; i++) {
+        container.innerHTML += `
+            <div class="card" style="margin-top:10px;">
+                <h3>${uploads[i].title}</h3>
+                <img src="${uploads[i].image}" style="width:100%;">
+                <button class="delete-btn" onclick="deleteExam(${i})">Delete</button>
+            </div>
+        `;
+    }
+}
+
+// delete function
+function deleteExam(index) {
+    var uploads = JSON.parse(localStorage.getItem("examUploads")) || [];
+
+    var confirmDelete = confirm("Are you sure you want to delete this exam?");
+
+    if (confirmDelete) {
+        uploads.splice(index, 1);
+        localStorage.setItem("examUploads", JSON.stringify(uploads));
+        displayUploads();
+    }
+}
+
+// load data
+window.onload = function() {
+    displayUploads();
+};
+</script>
+
+</body>
+</html>
