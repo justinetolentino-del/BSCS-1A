@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Portfolio</title>
+
+<style>
+
+
+body{
+    font-family: Arial;  
+    margin: 0px;  
+    background-color: #c6e2ff;
+}
+
+header{  
+    background: #a7d8de;
+    color: black;   
+    padding: 10px;  
+    text-align: center;
+}  
+
+h1{
+    color: black;
+}
+
+
+nav{  
+    margin: 5px;  
+    background-color: white;  
+    padding: 10px;
+    text-align: center;
+}
+
+nav a{  
+    color: black;  
+    margin: 10px;  
+    text-decoration: none;  
+    font-weight: bold;
+}
+
+section{  
+    display: none;  
+    padding: 20px;  
+}
+
+.active{  
+    display: block;  
+}
+
+.container{  
+    max-width: 800px;  
+    margin: auto;  
+}
+
+
+.profile-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.profile-info h2 {
+    margin: 0;
+}
+
+.profile-info p {
+    font-size: 13px;
+    color: gray;
+}
+
+
+.grid {
+    display: flex;
+    gap: 15px;
+}
+
+.box {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+.skill {
+    display: inline-block;
+    background: #4da3ff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin: 3px;
+}
+
+
+.school-name {
+    color: #2e7d32;  
+    font-weight: bold;  
+    font-size: 15px;  
+    border-bottom: 2px solid #2e7d32;  
+    display: inline-block;  
+    padding-bottom: 5px;  
+    margin-bottom: 15px;
+}
+
+.id-photo img {
+    border: 2px solid black;
+}
+
+
+@media (max-width: 600px) {
+    .grid {
+        flex-direction: column;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-img {
+        margin-bottom: 10px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1> My Portfolio Website </h1>  
+<nav>  
+<a href="index.html">Home</a>  
+<a href="dashboard.html">Dashboard</a>  
+</nav>  
+</header>
+     
+    <center><p class="school-name">Cavite State University Silang Campus</p></center>
+
+<section class="active">  
+
+<div class="container">  
+
+
+<div class="profile-card">
+    <img src="Picture.jpg" class="profile-img">
+
+    <div class="profile-info">
+        <h2>Justine Tolentino</h2>
+        <small>BS Computer Science</small>
+
+        <p>
+            I love watching movies, playing online games and riding a bike.
+Cycling is my favorite sport because it helps improve my endurance.
+I also enjoy listening to music because it relaxes my mind.
+        </p>
+    </div>
+</div>
+
+
+
+<div class="grid">
+
+    
+    <div class="box">
+        <h3>Skills</h3>
+        <span class="skill">HTML</span>
+        <span class="skill">CSS</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">C++</span>
+    </div>
+
+    
+    <div class="box">
+        <h3>Project</h3>
+        <p>
+            My Portfolio Website
+        </p>
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>
